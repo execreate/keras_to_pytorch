@@ -6,36 +6,37 @@ from .utils import conv_layer_name, dense_layer_name, padding_to_number
 
 
 class ModelConstructor:
-    def __init__(self,
-                 # input_shape = (1, 96, 96)
-                 input_shape,
-
-                 # conv_layers=[{
-                 #     "filters": 32,  # any integer
-                 #     "kernel_size": (3, 3),  # or just 3
-                 #     "strides": (1, 1),  # or just 1
-                 #     "padding": "valid",  # or "same"
-                 #     "activation": "relu",  # or "tanh" or "elu"
-                 #     "max_pooling": {
-                 #         "size": (2, 2),  # tuple of integers
-                 #         "strides": (2, 2),  # tuple of integers
-                 #     },
-                 #     "dropout": 0.5,  # any real number in range (0, 1)
-                 #     "kernel_initializer": "glorot_uniform",  # refer to https://keras.io/api/layers/initializers/
-                 # }, ...]
-                 conv_layers,
-
-                 # dense_layers=[{
-                 #     "input_units": 6400,  # any integer, you must set it for the first dense layer
-                 #     "units": 1000,  # any integer
-                 #     "dropout": 0.5,  # any real number in range (0, 1)
-                 #     "activation": "relu",  # or "tanh" or "elu"
-                 #     "kernel_initializer": "glorot_uniform",  # refer to https://keras.io/api/layers/initializers/
-                 # }, ...]
-                 dense_layers,
-
-                 # "channels_first" or "channels_last", note that pytorch uses "channels_first"
-                 data_format="channels_first"):
+    """
+    Model Constructor
+    Captures all hyper-parameters and builds up keras and pytorch models.
+    """
+    def __init__(self, input_shape, conv_layers, dense_layers, data_format="channels_first"):
+        """
+        Captures hyper-parameters
+        :param input_shape: a tuple of integers. Example: (1, 96, 96).
+        :param conv_layers: an array of mappings of conv layer parameters. Example: [{
+                     "filters": 32,  # any integer
+                     "kernel_size": (3, 3),  # or just 3
+                     "strides": (1, 1),  # or just 1
+                     "padding": "valid",  # or "same"
+                     "activation": "relu",  # or "tanh" or "elu"
+                     "max_pooling": {
+                         "size": (2, 2),  # tuple of integers
+                         "strides": (2, 2),  # tuple of integers
+                     },
+                     "dropout": 0.5,  # any real number in range (0, 1)
+                     "kernel_initializer": "glorot_uniform",  # refer to https://keras.io/api/layers/initializers/
+                 }, ...]
+        :param dense_layers: an array of dense layer parameters. Example: [{
+                     "input_units": 6400,  # any integer, you must set it for the first dense layer
+                     "units": 1000,  # any integer
+                     "dropout": 0.5,  # any real number in range (0, 1)
+                     "activation": "relu",  # or "tanh" or "elu"
+                     "kernel_initializer": "glorot_uniform",  # refer to https://keras.io/api/layers/initializers/
+                 }, ...]
+        :param data_format: data format string "channels_first" or "channels_last".
+            Note that pytorch uses "channels_first".
+        """
         assert type(input_shape) == tuple, "expected input_shape parameter to be a tuple"
         assert type(conv_layers) == list, "expected conv_layers parameter to be a list"
         assert type(dense_layers) == list, "expected dense_layers parameter to be a list"
