@@ -9,6 +9,9 @@ I started training my networks using [Keras](https://keras.io) with [PlaidML](ht
 backend. At the end of the day I had to convert my Keras model into a PyTorch model in order to submit
 my solution for evaluation.
 
+>! It did not work :(
+>! Refer to the notebook in the repository root for more details.
+
 ## Getting started
 
 Create a virtual environment with Python 3.8 using [virtualenv](https://docs.python.org/3.8/library/venv.html)

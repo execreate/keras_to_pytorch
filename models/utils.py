@@ -20,10 +20,10 @@ def padding_to_number(padding, kernel):
     else:
         h, w = kernel, kernel
 
-    return int((h - 1) / 2), int((w - 1) / 2)
+    return int(h / 2), int(w / 2)
 
 
-def get_keras_model_weights_dict(keras_model, pt_model):
+def get_keras_model_weights_dict(keras_model, pt_model, flip_channels=False):
     conv_counter = 0
     dense_counter = 0
 
@@ -40,9 +40,25 @@ def get_keras_model_weights_dict(keras_model, pt_model):
             layer_name = dense_layer_name(dense_counter)
             weights = keras_model.get_layer(name=layer_name).get_weights()
 
+        # googled the problem, made some fixes to the code
+        # but still does not work :(
         if weights is not None:
-            weight_dict['%s.weight' % layer_name] = np.transpose(weights[0])
-            weight_dict['%s.bias' % layer_name] = weights[1]
+            w = weights[0]
+            if len(w.shape) == 4:  # conv layer
+                w = w.transpose(3, 2, 0, 1)
+                if flip_channels:
+                    w = w[::-1, ::-1]
+                # flip filters
+                w = w[..., ::-1, ::-1].copy()
+            else:                  # dense layer
+                w = w.transpose()
+                if flip_channels:
+                    w = w[::-1]
+                # flip filters
+                w = w[..., ::-1].copy()
+            # print(w.shape)
+            weight_dict['%s.weight' % layer_name] = w
+            weight_dict['%s.bias' % layer_name] = weights[1].transpose()
 
     return weight_dict
 
@@ -77,6 +93,7 @@ def get_scores(x, y, keras_model, pt_model, pt_loss=None, batch_size=128):
     if pt_loss is None:
         pt_loss = pt_nn.MSELoss()
     pt_model.eval()
-    pt_loss = pt_loss(pt_model(torch.from_numpy(x)), torch.from_numpy(y)).item()
+    input_x = torch.from_numpy(x).squeeze().unsqueeze(1)
+    pt_loss = pt_loss(pt_model(input_x), torch.from_numpy(y)).item()
     print("pytorch model loss: ", pt_loss)
     print("pytorch model score: ", 1.0 / (2 * pt_loss))
