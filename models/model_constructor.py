@@ -10,7 +10,7 @@ class ModelConstructor:
     Model Constructor
     Captures all hyper-parameters and builds up keras and pytorch models.
     """
-    def __init__(self, input_shape, conv_layers, dense_layers, data_format="channels_last"):
+    def __init__(self, input_shape, conv_layers, dense_layers, data_format="channels_first"):
         """
         Captures hyper-parameters
         :param input_shape: a tuple of integers. Example: (1, 96, 96).

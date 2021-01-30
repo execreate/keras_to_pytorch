@@ -25,7 +25,7 @@ class FacialKeypointsDataset(BaseDataset):
         img = np.array([
             int(item) for item in img_str.split()
         ]).reshape((96, 96))
-        return np.expand_dims(img, axis=2).astype(np.uint8) / 255.
+        return np.expand_dims(img, axis=0).astype(np.uint8) / 255.
 
     @staticmethod
     def _get_keypoints(idx, key_pts_frame, shape=(15, 2)):
