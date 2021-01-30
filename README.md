@@ -31,7 +31,7 @@ Start a jupyter notebook server (just run `jupyter notebook` in your console) an
 ## Going deeper
 
 You can also use [Tensorflow](https://www.tensorflow.org) backend for Keras instead of PlaidML, just make sure
-to set `KERAS_BACKEND` environmental variable.
+to change the imports.
 
 Take a look on
 [models/model_constructor.py](https://github.com/execreate/keras_to_pytorch/blob/master/models/model_constructor.py)
