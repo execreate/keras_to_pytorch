@@ -1,6 +1,6 @@
 import math
 
-from keras.utils import Sequence
+from keras.utils.data_utils import Sequence
 import numpy as np
 
 

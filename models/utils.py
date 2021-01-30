@@ -48,7 +48,7 @@ def get_keras_model_weights_dict(keras_model, pt_model):
 
 
 def copy_weights_from_keras_to_pytorch(keras_model, pt_model):
-    weight_dict = get_keras_model_weights_dict(pt_model, keras_model)
+    weight_dict = get_keras_model_weights_dict(keras_model, pt_model)
     model_state_dict = pt_model.state_dict()
 
     for k in model_state_dict:
@@ -71,8 +71,8 @@ def weights_are_equal(keras_model, pt_model):
 
 def get_scores(x, y, keras_model, pt_model, pt_loss=None, batch_size=128):
     keras_metrics = keras_model.evaluate(x, y, batch_size=batch_size)
-    print("keras model loss: ", keras_metrics[0])
-    print("keras model score: ", 1.0 / (2 * keras_metrics[0]))
+    print("keras model loss: ", keras_metrics)
+    print("keras model score: ", 1.0 / (2 * keras_metrics))
 
     if pt_loss is None:
         pt_loss = pt_nn.MSELoss()
