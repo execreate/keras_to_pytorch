@@ -1,3 +1,5 @@
+import math
+
 from keras.utils import Sequence
 import numpy as np
 
@@ -14,7 +16,7 @@ class FacialKeypointsSequence(Sequence):
         batch_x = []
         batch_y = []
 
-        for i in range(batch_size):
+        for i in range(self.batch_size):
             x, y = self.fc_dataset[idx*self.batch_size + i]
             batch_x.append(x)
             batch_y.append(y)
