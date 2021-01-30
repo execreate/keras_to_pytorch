@@ -12,7 +12,7 @@ my solution for evaluation.
 <details>
   <summary>Spoiler alert</summary>
   
-  It did not work, the PyTorch model yield a terrible loss :(  
+  It did not work, the PyTorch model produces terrible loss :(  
   Refer [plug_n_play.ipynb](https://github.com/execreate/keras_to_pytorch/blob/master/plug_n_play.ipynb)
   for more details
   
