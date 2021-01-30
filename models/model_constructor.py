@@ -10,7 +10,7 @@ class ModelConstructor:
     Model Constructor
     Captures all hyper-parameters and builds up keras and pytorch models.
     """
-    def __init__(self, input_shape, conv_layers, dense_layers, data_format="channels_first"):
+    def __init__(self, input_shape, conv_layers, dense_layers, data_format="channels_last"):
         """
         Captures hyper-parameters
         :param input_shape: a tuple of integers. Example: (1, 96, 96).
@@ -35,7 +35,7 @@ class ModelConstructor:
                      "kernel_initializer": "glorot_uniform",  # refer to https://keras.io/api/layers/initializers/
                  }, ...]
         :param data_format: data format string "channels_first" or "channels_last".
-            Note that pytorch uses "channels_first".
+            Note that pytorch uses "channels_first", while for keras the default format is "channels_first".
         """
         assert type(input_shape) == tuple, "expected input_shape parameter to be a tuple"
         assert type(conv_layers) == list, "expected conv_layers parameter to be a list"
