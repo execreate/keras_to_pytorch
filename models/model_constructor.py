@@ -71,6 +71,8 @@ class ModelConstructor:
         conv_counter = 0
         for conv_layer in self.conv_layers:
             conv_counter += 1
+            kernel_initializer = conv_layer[
+                "kernel_initializer"] if "kernel_initializer" in conv_layer else "glorot_uniform"
 
             model.add(layers.Conv2D(
                 conv_layer["filters"],
@@ -78,7 +80,7 @@ class ModelConstructor:
                 strides=conv_layer["strides"],
                 padding=conv_layer["padding"],
                 activation=conv_layer["activation"],
-                kernel_initializer=conv_layer["kernel_initializer"],
+                kernel_initializer=kernel_initializer,
                 name=conv_layer_name(conv_counter),
                 data_format=self.data_format
             ))
@@ -95,11 +97,13 @@ class ModelConstructor:
         dense_counter = 0
         for dense_layer in self.dense_layers:
             dense_counter += 1
+            kernel_initializer = dense_layer[
+                "kernel_initializer"] if "kernel_initializer" in dense_layer else "glorot_uniform"
 
             model.add(layers.Dense(
                 dense_layer["units"],
                 activation=dense_layer["activation"],
-                kernel_initializer=dense_layer["kernel_initializer"],
+                kernel_initializer=kernel_initializer,
                 name=dense_layer_name(dense_counter)
             ))
 
