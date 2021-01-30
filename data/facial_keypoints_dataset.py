@@ -32,7 +32,7 @@ class FacialKeypointsDataset(BaseDataset):
         keypoint_cols = list(key_pts_frame.columns)[:-1]
         key_pts = key_pts_frame.iloc[idx][keypoint_cols].values.reshape(shape)
         key_pts = (key_pts.astype(np.float) - 48.0) / 48.0
-        return key_pts
+        return np.array(key_pts)
 
     def __len__(self):
         return self.key_pts_frame.shape[0]
@@ -42,4 +42,4 @@ class FacialKeypointsDataset(BaseDataset):
         keypoints = self._get_keypoints(idx, self.key_pts_frame)
         if self.transform:
             image = self.transform(image)
-        return {'image': image, 'keypoints': keypoints}
+        return image, keypoints
